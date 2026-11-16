@@ -1,12 +1,18 @@
 // ShopAdapter for the Strike Beam static store: products from catalog.json, orders/refunds in Netlify Blobs.
-import { getStore } from "@netlify/blobs";
 import { CAT, resolveVariant } from "./catalog.mjs";
 import { siteUrl } from "./config.mjs";
 import { sendOrderConfirmation as sendEmail } from "./email.mjs";
 
-const ordersStore = () => getStore("altcheckout-orders");
-const refundsStore = () => getStore("altcheckout-refunds");
-const sessionsStore = () => getStore("altcheckout-sessions");
+// Lazy-load the storage library so the read endpoints (status/catalog/quote) don't
+// pay to evaluate it on a cold start — only order/refund/session paths touch Blobs.
+let _getStore;
+async function store(name) {
+  if (!_getStore) ({ getStore: _getStore } = await import("@netlify/blobs"));
+  return _getStore(name);
+}
+const ordersStore = () => store("altcheckout-orders");
+const refundsStore = () => store("altcheckout-refunds");
+const sessionsStore = () => store("altcheckout-sessions");
 
 const rand = (n) => Math.random().toString(36).slice(2, 2 + n).toUpperCase();
 const newOrderId = () => "SB" + Date.now().toString(36).toUpperCase() + rand(4);
@@ -73,13 +79,14 @@ export const shop = {
   async shippingTaxRatePercent(address) { return 0; },
 
   async findOrder(altcheckout_order_id) {
-    const rec = await ordersStore().get(altcheckout_order_id, { type: "json" });
+    const orders = await ordersStore();
+    const rec = await orders.get(altcheckout_order_id, { type: "json" });
     return rec ? toAnswer(rec) : null;
   },
 
   async createPaidOrder(order) {
-    const store = ordersStore();
-    const existing = await store.get(order.altcheckout_order_id, { type: "json" });
+    const orders = await ordersStore();
+    const existing = await orders.get(order.altcheckout_order_id, { type: "json" });
     if (existing) return toAnswer(existing);
     const order_id = newOrderId();
     const rec = {
@@ -98,10 +105,10 @@ export const shop = {
       created_at: Math.floor(Date.now() / 1000),
       refunded_amount: 0, refund_status: "none", refunds: [],
     };
-    await store.setJSON(order.altcheckout_order_id, rec);
-    await store.setJSON("byid_" + order_id, { altcheckout_order_id: order.altcheckout_order_id });
+    await orders.setJSON(order.altcheckout_order_id, rec);
+    await orders.setJSON("byid_" + order_id, { altcheckout_order_id: order.altcheckout_order_id });
     if (order.session_ref) {
-      try { await sessionsStore().setJSON(order.session_ref, { paid: true, order_id }); } catch {}
+      try { const sessions = await sessionsStore(); await sessions.setJSON(order.session_ref, { paid: true, order_id }); } catch {}
     }
     return toAnswer(rec);
   },
@@ -111,30 +118,32 @@ export const shop = {
   },
 
   async clearCart(session_ref) {
-    try { await sessionsStore().setJSON(session_ref, { paid: true, cleared: true }); } catch {}
+    try { const sessions = await sessionsStore(); await sessions.setJSON(session_ref, { paid: true, cleared: true }); } catch {}
   },
 
   async findRefund(refund_ref) {
-    const rec = await refundsStore().get(refund_ref, { type: "json" });
+    const refunds = await refundsStore();
+    const rec = await refunds.get(refund_ref, { type: "json" });
     return rec ? rec.refund_id : null;
   },
 
   async recordRefund(refund) {
-    const store = ordersStore();
+    const orders = await ordersStore();
     let key = refund.altcheckout_order_id || null;
-    let rec = key ? await store.get(key, { type: "json" }) : null;
+    let rec = key ? await orders.get(key, { type: "json" }) : null;
     if (!rec && refund.order_id) {
-      const idx = await store.get("byid_" + refund.order_id, { type: "json" });
-      if (idx) { key = idx.altcheckout_order_id; rec = await store.get(key, { type: "json" }); }
+      const idx = await orders.get("byid_" + refund.order_id, { type: "json" });
+      if (idx) { key = idx.altcheckout_order_id; rec = await orders.get(key, { type: "json" }); }
     }
     if (!rec) return null;
     const refund_id = "rf_" + Date.now().toString(36).toUpperCase() + rand(3);
-    await refundsStore().setJSON(refund.refund_ref, { refund_id, order_key: key, amount: refund.amount });
+    const refunds = await refundsStore();
+    await refunds.setJSON(refund.refund_ref, { refund_id, order_key: key, amount: refund.amount });
     rec.refunded_amount = (rec.refunded_amount ?? 0) + refund.amount;
     rec.refunds = rec.refunds ?? [];
     rec.refunds.push({ refund_ref: refund.refund_ref, refund_id, amount: refund.amount, reason: refund.reason ?? "", at: Math.floor(Date.now() / 1000) });
     rec.refund_status = rec.refunded_amount >= rec.total ? "refunded" : "partially_refunded";
-    await store.setJSON(key, rec);
+    await orders.setJSON(key, rec);
     return refund_id;
   },
 };
