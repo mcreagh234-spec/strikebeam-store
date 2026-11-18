@@ -15,15 +15,29 @@
       "flat_fee_cents": 0,
       "free_over_cents": 0
     },
-    "socials": { "tiktok": "", "instagram": "", "youtube": "", "facebook": "" },
+    "socials": {
+      "tiktok": "",
+      "instagram": "",
+      "youtube": "",
+      "facebook": ""
+    },
     "videos": [],
     "reviews": [],
     "featured_video": null,
     "reviews_title": "",
     "shipping_options": [
-      { "id": "standard", "label": "Free Shipping", "eta": "14–24 days after dispatch", "price_cents": 0 }
+      {
+        "id": "standard",
+        "label": "Free Shipping",
+        "eta": "14–24 days after dispatch",
+        "price_cents": 0
+      }
     ],
-    "rating": null
+    "rating": null,
+    "analytics": {
+      "posthog_key": "",
+      "posthog_host": "https://us.i.posthog.com"
+    }
   },
   "products": [
     {
@@ -40,11 +54,23 @@
         "images/strikebeam-turret.jpg"
       ],
       "highlights": [
-        { "icon": "🎯", "text": "Infrared targeting with real long-range hit detection — no screens needed." },
-        { "icon": "👥", "text": "Multiplayer mode so the whole squad can battle at once." },
-        { "icon": "💡", "text": "Light & sound effects fire off the instant you land a hit." }
+        {
+          "icon": "🎯",
+          "text": "Infrared targeting with real long-range hit detection — no screens needed."
+        },
+        {
+          "icon": "👥",
+          "text": "Multiplayer mode so the whole squad can battle at once."
+        },
+        {
+          "icon": "💡",
+          "text": "Light & sound effects fire off the instant you land a hit."
+        }
       ],
-      "trust": ["🚚 Free shipping", "🔒 Secure checkout"],
+      "trust": [
+        "🚚 Free shipping",
+        "🔒 Secure checkout"
+      ],
       "options": [],
       "sold_out": [],
       "rating": null,
@@ -112,33 +138,106 @@
           "title": "Small setup. Big battle energy.",
           "image": "images/strikebeam-turret.jpg",
           "features": [
-            { "icon": "🎯", "title": "A clear room becomes your battlefield", "text": "Set the sentry turret on a stable surface and power it on — its long-range sensors pick up hits from across the room." },
-            { "icon": "⚡", "title": "Two blasters, ready for squad play", "text": "The red and blue blasters give each player their own color and their own hit counter." },
-            { "icon": "💡", "title": "Light & sound on every hit", "text": "Land a shot and the turret and blasters react instantly with light and sound — you always know when you've scored." },
-            { "icon": "🎖️", "title": "Compact enough to pack away after", "text": "One turret, two handheld blasters, three wristbands — an easy indoor setup that stores just as easily." }
+            {
+              "icon": "🎯",
+              "title": "A clear room becomes your battlefield",
+              "text": "Set the sentry turret on a stable surface and power it on — its long-range sensors pick up hits from across the room."
+            },
+            {
+              "icon": "⚡",
+              "title": "Two blasters, ready for squad play",
+              "text": "The red and blue blasters give each player their own color and their own hit counter."
+            },
+            {
+              "icon": "💡",
+              "title": "Light & sound on every hit",
+              "text": "Land a shot and the turret and blasters react instantly with light and sound — you always know when you've scored."
+            },
+            {
+              "icon": "🎖️",
+              "title": "Compact enough to pack away after",
+              "text": "One turret, two handheld blasters, three wristbands — an easy indoor setup that stores just as easily."
+            }
           ]
         },
         "cards": {
           "title": "Everything in one set.",
           "lead": "A little setup. A whole new way to battle together.",
           "items": [
-            { "image": "images/strikebeam-turret.jpg", "chip": "SENTRY TURRET", "title": "1 × Turret", "text": "A compact centerpiece with long-range infrared sensors for your indoor battle." },
-            { "image": "images/strikebeam-blasters.jpg", "chip": "BLASTERS", "title": "2 × Blasters", "text": "One red and one blue, each with its own hit detection, for head-to-head or team play." },
-            { "image": "images/strikebeam-bands.jpg", "chip": "SQUAD BANDS", "title": "3 × Wristbands", "text": "White, blue and red — so every player on the squad has their color." }
+            {
+              "image": "images/strikebeam-turret.jpg",
+              "chip": "SENTRY TURRET",
+              "title": "1 × Turret",
+              "text": "A compact centerpiece with long-range infrared sensors for your indoor battle."
+            },
+            {
+              "image": "images/strikebeam-blasters.jpg",
+              "chip": "BLASTERS",
+              "title": "2 × Blasters",
+              "text": "One red and one blue, each with its own hit detection, for head-to-head or team play."
+            },
+            {
+              "image": "images/strikebeam-bands.jpg",
+              "chip": "SQUAD BANDS",
+              "title": "3 × Wristbands",
+              "text": "White, blue and red — so every player on the squad has their color."
+            }
           ]
         },
-        "reviews": [],
-        "faq": null
+        "faq": null,
+        "gallery": {
+          "title": "STRIKE BEAM IN ACTION",
+          "lead": "A closer look at what shows up at your door.",
+          "items": [
+            {
+              "image": "images/strikebeam-ugc-1.jpg",
+              "title": "Ready to play",
+              "text": "The full Strike Beam set, out of the box and ready for game night — no batteries-not-included surprises."
+            },
+            {
+              "image": "images/strikebeam-ugc-2.jpg",
+              "title": "One-box setup",
+              "text": "Everything ships in a single retail-ready box. Open it, grab a blaster, and go."
+            },
+            {
+              "image": "images/strikebeam-ugc-3.jpg",
+              "title": "Everything included",
+              "text": "Inside: the sentry turret, two infrared blasters, squad wristbands, and a quick-start guide."
+            }
+          ]
+        },
+        "reviews": []
       }
     }
   ],
   "faq": [
-    { "q": "What is the return policy?", "a": "If you're not happy with your Strike Beam set, contact us within 30 days of delivery and we'll help you through the return process." },
-    { "q": "What comes in the set?", "a": "Each set includes 1 infrared sentry turret, 2 infrared blasters (red and blue), and 3 squad wristbands (white, blue, red)." },
-    { "q": "How do I set it up?", "a": "Power on the turret and both blasters, pick a game mode, and you're ready to battle. No app, pairing, or screen required." },
-    { "q": "Can two people play?", "a": "Yes — Strike Beam is built for multiplayer. Each blaster has its own color and hit detection, so two or more players can battle at once." },
-    { "q": "What are my shipping options?", "a": "We offer free standard shipping, with delivery in 14–24 days after your order is dispatched (processing takes 2–4 business days)." },
-    { "q": "How does the hit detection work?", "a": "Each blaster and the sentry turret use infrared sensors with real long-range targeting — land a hit and you'll get instant light and sound feedback." },
-    { "q": "How can I contact Strike Beam?", "a": "Email support@strikebeamusa.com and our team will get back to you about your order." }
+    {
+      "q": "What is the return policy?",
+      "a": "If you're not happy with your Strike Beam set, contact us within 30 days of delivery and we'll help you through the return process."
+    },
+    {
+      "q": "What comes in the set?",
+      "a": "Each set includes 1 infrared sentry turret, 2 infrared blasters (red and blue), and 3 squad wristbands (white, blue, red)."
+    },
+    {
+      "q": "How do I set it up?",
+      "a": "Power on the turret and both blasters, pick a game mode, and you're ready to battle. No app, pairing, or screen required."
+    },
+    {
+      "q": "Can two people play?",
+      "a": "Yes — Strike Beam is built for multiplayer. Each blaster has its own color and hit detection, so two or more players can battle at once."
+    },
+    {
+      "q": "What are my shipping options?",
+      "a": "We offer free standard shipping, with delivery in 14–24 days after your order is dispatched (processing takes 2–4 business days)."
+    },
+    {
+      "q": "How does the hit detection work?",
+      "a": "Each blaster and the sentry turret use infrared sensors with real long-range targeting — land a hit and you'll get instant light and sound feedback."
+    },
+    {
+      "q": "How can I contact Strike Beam?",
+      "a": "Email support@strikebeamusa.com and our team will get back to you about your order."
+    }
   ]
 }
